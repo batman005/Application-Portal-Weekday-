@@ -2,7 +2,6 @@ import DropdownInputCombo from "./components/dropDown/DropdownInputCombo";
 import JobList from "./JobList";
 
 export default function App() {
-  
     return (
         <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-4 py-2">
@@ -16,8 +15,7 @@ export default function App() {
                         "flutter",
                         "react native",
                         "android",
-                        "front end",
-                        "techlead",
+                        "tech lead",
                     ]}
                     filterKey={"jobRole"}
                 />
@@ -41,7 +39,7 @@ export default function App() {
                 />
                 <DropdownInputCombo
                     placeholder="Remote"
-                    options={["remote", "delhi ncr", "chennai", "banglore"]}
+                    options={["remote", "delhi ncr", "chennai", "bangalore"]}
                     filterKey={"location"}
                 />
                 <DropdownInputCombo
@@ -50,13 +48,7 @@ export default function App() {
                     filterKey={"minJdSalary"}
                 />
             </div>
-
-            <JobList/>
-            {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-20 pt-10">
-                {jobDetails?.jdList?.map((data) => (
-                    <Card key={'id'} data={data} />
-                ))}
-            </div> */}
+            <JobList />
         </div>
     );
 }

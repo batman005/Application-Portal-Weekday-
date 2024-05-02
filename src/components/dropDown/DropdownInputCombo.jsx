@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { RxCross2 } from "react-icons/rx";
 import { FaAngleDown } from "react-icons/fa";
@@ -11,34 +11,44 @@ import {
 function DropdownInputCombo({ placeholder, options, filterKey }) {
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [inputValue, setInputValue] = useState("");
     const dropdownRef = useRef(null);
     const dispatch = useDispatch();
 
-    console.log(selectedOptions);
+    const filteredOptions = options.filter(option =>
+        option.toLowerCase().includes(inputValue.toLowerCase())
+    );
 
     const toggleOption = (option) => {
         const currentIndex = selectedOptions.indexOf(option);
-        console.log(currentIndex);
         const newSelectedOptions = [...selectedOptions];
-        console.log(newSelectedOptions);
         if (currentIndex === -1) {
-            newSelectedOptions.push(option); // Not currently selected, so add it
+            newSelectedOptions.push(option);
         } else {
-            newSelectedOptions.splice(currentIndex, 1); // Currently selected, so remove it
+            newSelectedOptions.splice(currentIndex, 1);
         }
-
         setSelectedOptions(newSelectedOptions);
         dispatch(setFilter({ filter: filterKey, value: newSelectedOptions }));
     };
 
     const handleClearAll = () => {
         setSelectedOptions([]);
+        setInputValue("");
         dispatch(clearFilters());
     };
 
     const toggleDropdown = (e) => {
         e.stopPropagation();
         setDropdownOpen(!dropdownOpen);
+    };
+
+    const handleInputChange = (e) => {
+        setInputValue(e.target.value);
+    };
+
+    const handleOptionClick = (option) => {
+        toggleOption(option);
+        setInputValue(""); // Clear input value after selecting an option
     };
 
     return (
@@ -60,7 +70,7 @@ function DropdownInputCombo({ placeholder, options, filterKey }) {
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        toggleOption(option); // Use toggleOption here
+                                        toggleOption(option);
                                     }}
                                     className="text-gray-800 p-1 hover:text-red-600 hover:bg-red-300 ml-1 rounded-sm"
                                 >
@@ -70,10 +80,15 @@ function DropdownInputCombo({ placeholder, options, filterKey }) {
                         ))
                     ) : (
                         <div className="flex items-center">
-                            <div className="text-gray-400 text-sm ">{placeholder}</div>
-                        </div> // Placeholder text
+                            <input
+                                type="text"
+                                placeholder={placeholder}
+                                value={inputValue}
+                                onChange={handleInputChange}
+                                className="outline-none border-none px-1"
+                            />
+                        </div>
                     )}
-
                     <button
                         onClick={toggleDropdown}
                         className="text-gray-300 hover:text-gray-500 flex items-center"
@@ -102,11 +117,11 @@ function DropdownInputCombo({ placeholder, options, filterKey }) {
                                 : "100%",
                         }}
                     >
-                        {options.map((option) => (
+                        {filteredOptions.map((option) => (
                             <li
                                 key={option}
                                 className="p-2 hover:bg-gray-100 cursor-pointer"
-                                onClick={() => toggleOption(option)}
+                                onClick={() => handleOptionClick(option)}
                             >
                                 {option}
                             </li>

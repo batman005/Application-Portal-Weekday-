@@ -45,9 +45,18 @@ export const jobDetailsSlice = createSlice({
         },
     },
 });
-
-function filterJobs() {}
-
+function filterJobs(jobs, filters) {
+    return jobs.jdList.filter((job) => {
+        return (
+            (filters.jobRole.length === 0 || filters.jobRole.includes(job.jobRole)) &&
+            (!filters.minExp || job.minExp >= filters.minExp) &&
+            (!filters.numberOfEmployees ||
+                job.numberOfEmployees === filters.numberOfEmployees) &&
+            (!filters.location.length || filters.location.includes(job.location)) &&
+            (!filters.minJdSalary || job.minJdSalary >= filters.minJdSalary)
+        );
+    });
+}
 
 export const { getJobDetailsSuccess, setFilter, clearFilters, jobError } =
     jobDetailsSlice.actions;

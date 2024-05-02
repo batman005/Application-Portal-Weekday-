@@ -21,8 +21,8 @@ const CardHeader = ({ company, role, location, salary }) => {
             </div>
             <div className="pb-2">
                 <p className="text-lg font-semibold text-slate-600">
-                    {"Estimated Salary: ₹" + salary + " LPA ✅" ||
-                        "Estimated Salary: ₹18 - 35 LPA ✅"}
+                    {"Estimated Salary: $" + salary + "K USD✅" ||
+                        "Estimated Salary: $18 - 35 USD ✅"}
                 </p>
             </div>
         </div>
