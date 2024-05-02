@@ -1,6 +1,4 @@
-
-
-
+/* eslint-disable react/prop-types */
 const Modal = ({ onClose, JobDetail }) => {
   // Function to stop propagation for modal content clicks
   const stopPropagation = (e) => {

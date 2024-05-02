@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import TimeStamp from "./TimeStamp";
 import CompanyImg from "../../assets/company-img.png";
 

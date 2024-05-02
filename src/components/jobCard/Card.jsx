@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import CardHeader from "./CardHeader";
 import CardBody from "./CardBody";
 import Button, { ButtonAvatar } from "./Button";
