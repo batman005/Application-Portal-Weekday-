@@ -1,26 +1,39 @@
 /* eslint-disable react/prop-types */
 import { useState, useRef } from "react";
-import { RxCross2 } from "react-icons/rx"; // Check correct import based on actual library usage
-import { FaAngleDown } from "react-icons/fa"; // Ensure correct import path
+import { useDispatch } from "react-redux";
+import { RxCross2 } from "react-icons/rx";
+import { FaAngleDown } from "react-icons/fa";
+import {
+    clearFilters,
+    setFilter,
+} from "../../redux/features/jobDetails/jobDetailsSlice";
 
-function DropdownInputCombo({ placeholder, options }) {
+function DropdownInputCombo({ placeholder, options, filterKey }) {
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
+    const dispatch = useDispatch();
 
-    const handleChange = (value) => {
-        if (!selectedOptions.includes(value)) {
-            setSelectedOptions([...selectedOptions, value]);
+    console.log(selectedOptions);
+
+    const toggleOption = (option) => {
+        const currentIndex = selectedOptions.indexOf(option);
+        console.log(currentIndex);
+        const newSelectedOptions = [...selectedOptions];
+        console.log(newSelectedOptions);
+        if (currentIndex === -1) {
+            newSelectedOptions.push(option); // Not currently selected, so add it
+        } else {
+            newSelectedOptions.splice(currentIndex, 1); // Currently selected, so remove it
         }
-        setDropdownOpen(false); // Close dropdown after selection
-    };
 
-    const handleRemoveOption = (option) => {
-        setSelectedOptions(selectedOptions.filter((o) => o !== option));
+        setSelectedOptions(newSelectedOptions);
+        dispatch(setFilter({ filter: filterKey, value: newSelectedOptions }));
     };
 
     const handleClearAll = () => {
         setSelectedOptions([]);
+        dispatch(clearFilters());
     };
 
     const toggleDropdown = (e) => {
@@ -47,7 +60,7 @@ function DropdownInputCombo({ placeholder, options }) {
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        handleRemoveOption(option);
+                                        toggleOption(option); // Use toggleOption here
                                     }}
                                     className="text-gray-800 p-1 hover:text-red-600 hover:bg-red-300 ml-1 rounded-sm"
                                 >
@@ -56,7 +69,6 @@ function DropdownInputCombo({ placeholder, options }) {
                             </div>
                         ))
                     ) : (
-                        // <div className="text-gray-400 text-sm p-2">{placeholder}</div> // Dynamic placeholder text
                         <div className="flex items-center">
                             <div className="text-gray-400 text-sm ">{placeholder}</div>
                         </div> // Placeholder text
@@ -67,18 +79,15 @@ function DropdownInputCombo({ placeholder, options }) {
                         className="text-gray-300 hover:text-gray-500 flex items-center"
                     >
                         {selectedOptions.length > 0 && (
-                            <>
-                                <button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleClearAll();
-                                    }}
-                                    className="text-gray-300 hover:text-gray-500 ml-3"
-                                >
-                                    <RxCross2 />
-                                </button>
-                                {/* <div className="border-r border-gray-300 h-6 mx-2"></div> */}
-                            </>
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleClearAll();
+                                }}
+                                className="text-gray-300 hover:text-gray-500 ml-3"
+                            >
+                                <RxCross2 />
+                            </button>
                         )}
                         <div className="border-r border-gray-300 h-6 mx-2"></div>
                         <FaAngleDown />
@@ -97,7 +106,7 @@ function DropdownInputCombo({ placeholder, options }) {
                             <li
                                 key={option}
                                 className="p-2 hover:bg-gray-100 cursor-pointer"
-                                onClick={() => handleChange(option)}
+                                onClick={() => toggleOption(option)}
                             >
                                 {option}
                             </li>
