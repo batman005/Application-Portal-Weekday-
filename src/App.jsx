@@ -1,5 +1,5 @@
 import DropdownInputCombo from "./components/dropDown/DropdownInputCombo";
-import JobList from "./JobList";
+import JobList from "./components/jobCard/JobList";
 
 export default function App() {
     return (

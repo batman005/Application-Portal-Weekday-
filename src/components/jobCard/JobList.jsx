@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchJobDetails } from './redux/actions/jobActions';
-import Card from './components/jobCard/Card';
-import Loader from './utils/Loader';
+import { fetchJobDetails } from '../../redux/actions/jobActions';
+import Card from './Card';
+import Loader from '../../utils/Loader';
 
 export default function JobList() {
   const dispatch = useDispatch();
