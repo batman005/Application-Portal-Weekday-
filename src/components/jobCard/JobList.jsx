@@ -34,7 +34,7 @@ export default function JobList() {
               setLimit(prevLimit => Math.min(prevLimit + 4, jobDetails.length));
               setIsLoading(false);
               isScrolling.current = false;
-            }, 100);
+            }, 2000);
           }
         });
       },
@@ -57,7 +57,7 @@ export default function JobList() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-20 pt-10 overflow-auto">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-20 pt-10">
       {visibleJobDetails.map((data) => (
         <Card key={data.jdUid} data={data} />
       ))}

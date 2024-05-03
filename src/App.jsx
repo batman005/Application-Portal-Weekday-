@@ -1,9 +1,10 @@
-import DropdownInputCombo from "./components/dropDown/DropdownInputCombo";
-import JobList from "./components/jobCard/JobList";
+import DropdownInputCombo from "./components/DropDown/DropdownInputCombo";
+import JobList from "./components/JobCard/JobList";
+import SearchBar from "./components/SearchBar/SearchBar";
 
 export default function App() {
     return (
-        <div>
+        <div className="p-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-4 py-2">
                 <DropdownInputCombo
                     placeholder="Roles"
@@ -47,6 +48,7 @@ export default function App() {
                     options={["0", "10", "20", "30", "40", "50", "60", "70"]}
                     filterKey={"minJdSalary"}
                 />
+                <SearchBar/>
             </div>
             <JobList />
         </div>

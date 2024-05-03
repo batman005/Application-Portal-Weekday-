@@ -14,9 +14,11 @@ const Card = ({ data }) => {
 
   return (
     <div>
-      <div className="max-w-sm bg-white border border-gray-200 rounded-3xl shadow transform hover:-translate-y-1 transition duration-300 ease-in-out">
+      <div className="max-w-sm bg-white border border-gray-200 rounded-3xl shadow transform transition duration-300 ease-in-out hover:scale-102">
         <div className="px-6 pb-1 pt-6">
           <CardHeader
+            company={data.companyName}
+            logoUrl={data.logoUrl}
             role={data.jobRole}
             location={data.location}
             salary={data.maxJdSalary}

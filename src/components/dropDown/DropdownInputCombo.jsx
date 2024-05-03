@@ -71,6 +71,7 @@ function DropdownInputCombo({ placeholder, options, filterKey }) {
     return (
         <div className="mx-auto w-full max-w-lg">
             <div className="relative">
+                {selectedOptions.length !=0 && <p className="text-sm font-semibold">{placeholder}</p> }  
                 <div
                     ref={dropdownRef}
                     className={`inline-flex min-w-52 justify-between items-center bg-gray-50 border border-gray-300 rounded-sm p-1.5 whitespace-nowrap overflow-x-auto ${dropdownOpen ? 'border-blue-500' : ''}`}

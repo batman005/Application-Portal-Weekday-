@@ -9,7 +9,13 @@ export default {
 				"5px": "5px", // Specific pixel-based blur
 				"10px": "10px", // Another specific pixel-based blur
 			},
+			scale: {
+				102: "1.02", // Example custom scale
+				110: "1.10",
+				120: "1.20", // Add more as needed
 		},
+		},
+
 	},
 	plugins: [],
 }
