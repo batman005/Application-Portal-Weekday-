@@ -1,11 +1,11 @@
-import DropdownInputCombo from "./components/DropDown/DropdownInputCombo";
-import JobList from "./components/JobCard/JobList";
+import DropdownInputCombo from "./components/dropDown/DropdownInputCombo";
+import JobList from "./components/jobCard/JobList";
 import SearchBar from "./components/SearchBar/SearchBar";
 
 export default function App() {
     return (
         <div className="p-5">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-4 py-2">
+            <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 px-4 py-2">
                 <DropdownInputCombo
                     placeholder="Roles"
                     options={[
@@ -23,13 +23,14 @@ export default function App() {
                 <DropdownInputCombo
                     placeholder="Number of Employees"
                     options={[
-                        "1-10",
-                        "11-20",
-                        "21-50",
-                        "51-100",
-                        "101-200",
-                        "201-500",
-                        "500+",
+                        "Json object is N/A",
+                        // "1-10",
+                        // "11-20",
+                        // "21-50",
+                        // "51-100",
+                        // "101-200",
+                        // "201-500",
+                        // "500+",
                     ]}
                     filterKey={"numberOfEmployees"}
                 />
@@ -48,7 +49,7 @@ export default function App() {
                     options={["0", "10", "20", "30", "40", "50", "60", "70"]}
                     filterKey={"minJdSalary"}
                 />
-                <SearchBar/>
+                <SearchBar />
             </div>
             <JobList />
         </div>

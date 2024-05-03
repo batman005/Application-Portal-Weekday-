@@ -19,7 +19,7 @@ function DropdownInputCombo({ placeholder, options, filterKey }) {
         // event listener for component mounting
         document.addEventListener("click", handleOutsideClick);
 
-        // Clean up 
+        // Clean up
         return () => {
             document.removeEventListener("click", handleOutsideClick);
         };
@@ -32,7 +32,7 @@ function DropdownInputCombo({ placeholder, options, filterKey }) {
         }
     };
 
-    const filteredOptions = options.filter(option =>
+    const filteredOptions = options.filter((option) =>
         option.toLowerCase().includes(inputValue.toLowerCase())
     );
 
@@ -51,7 +51,7 @@ function DropdownInputCombo({ placeholder, options, filterKey }) {
     const handleClearAll = () => {
         setSelectedOptions([]);
         setInputValue("");
-        dispatch(clearFilters());
+        dispatch(clearFilters(filterKey)); // Specify the filter key to clear
     };
 
     const toggleDropdown = (e) => {
@@ -65,16 +65,21 @@ function DropdownInputCombo({ placeholder, options, filterKey }) {
 
     const handleOptionClick = (option) => {
         toggleOption(option);
-        setInputValue(""); // Clear input 
+        setInputValue(""); // Clear input
     };
 
     return (
         <div className="mx-auto w-full max-w-lg">
             <div className="relative">
-                {selectedOptions.length !=0 && <p className="text-sm font-semibold">{placeholder}</p> }  
+                {selectedOptions.length != 0 && (
+                    <p className="text-sm font-semibold absolute -top-[18px]">
+                        {placeholder}
+                    </p>
+                )}
                 <div
                     ref={dropdownRef}
-                    className={`inline-flex min-w-52 justify-between items-center bg-gray-50 border border-gray-300 rounded-sm p-1.5 whitespace-nowrap overflow-x-auto ${dropdownOpen ? 'border-blue-500' : ''}`}
+                    className={`inline-flex min-w-52 justify-between items-center bg-gray-50 border border-gray-300 rounded-sm p-1.5 whitespace-nowrap  ${dropdownOpen ? "border-blue-500" : ""
+                        }`}
                     style={{ minHeight: "38px" }}
                     onClick={toggleDropdown}
                 >
@@ -107,7 +112,7 @@ function DropdownInputCombo({ placeholder, options, filterKey }) {
                             />
                         </div>
                     )}
-                    <button
+                    <div
                         onClick={toggleDropdown}
                         className="text-gray-300 hover:text-gray-500 flex items-center"
                     >
@@ -124,7 +129,7 @@ function DropdownInputCombo({ placeholder, options, filterKey }) {
                         )}
                         <div className="border-r border-gray-300 h-6 mx-2"></div>
                         <FaAngleDown />
-                    </button>
+                    </div>
                 </div>
                 {dropdownOpen && (
                     <ul

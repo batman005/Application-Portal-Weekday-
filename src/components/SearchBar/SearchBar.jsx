@@ -1,10 +1,10 @@
-import React, { useState, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import { searchCompany } from '../../redux/features/jobDetails/jobDetailsSlice'; // Import your searchCompany action
+import { useState, useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { searchCompany } from "../../redux/features/jobDetails/jobDetailsSlice"; // Import your searchCompany action
 
 const SearchBar = () => {
     const dispatch = useDispatch();
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState("");
 
     // Define a debounced function to dispatch search action
     const debouncedSearch = useCallback(
@@ -35,13 +35,16 @@ const SearchBar = () => {
     }
 
     return (
-        <div className={`inline-flex min-w-28 justify-between items-center bg-gray-50 border border-gray-300 rounded-sm p-1.5 overflow-x-auto`}>
-            <input 
-                type="text" 
-                placeholder="Search Company name" 
-                className="outline-none border-none bg-transparent w-full px-2" 
-                value={searchQuery} 
-                onChange={handleChange} 
+        <div
+            className={` bg-gray-50 border border-gray-300 rounded-sm `}
+            style={{ minHeight: "38px" }}
+        >
+            <input
+                type="text"
+                placeholder="Search Company name"
+                className="flex justify-center items-center outline-none border-none bg-transparent pt-1 px-2"
+                value={searchQuery}
+                onChange={handleChange}
             />
         </div>
     );
