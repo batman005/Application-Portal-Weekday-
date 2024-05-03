@@ -1,5 +1,7 @@
 # local Setup 
 ```
+// node version
+node v20.12.2 (npm v10.5.0)
 //install dependency
 npm i or npm install
 //to run the project
