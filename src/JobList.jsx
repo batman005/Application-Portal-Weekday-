@@ -1,31 +1,68 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchJobDetails } from './redux/actions/jobActions';
 import Card from './components/jobCard/Card';
 import Loader from './utils/Loader';
 
 export default function JobList() {
-  const dispatch = useDispatch(); 
-  const loading = useSelector(state => state.jobDetails.loading); // Get loading state from Redux
+  const dispatch = useDispatch();
+  const loading = useSelector(state => state.jobDetails.loading);
+  const jobDetails = useSelector(state => state.jobDetails.filteredDetails.jdList);
+  const [visibleJobDetails, setVisibleJobDetails] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [limit, setLimit] = useState(6);
+  const loaderRef = useRef(null);
+  const isScrolling = useRef(false);
 
   useEffect(() => {
-    dispatch(fetchJobDetails())
+    dispatch(fetchJobDetails());
   }, [dispatch]);
 
-  const jobDetails = useSelector((state) => state.jobDetails.filteredDetails);
-  console.log(jobDetails);
+  useEffect(() => {
+    setVisibleJobDetails(jobDetails.slice(0, limit));
+  }, [jobDetails, limit]);
 
-  if (loading) {
-    return (
-      <Loader />
+  useEffect(() => {
+    //monitor the loader element at the bottom of the list
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isLoading && limit < jobDetails.length && !isScrolling.current) {
+            isScrolling.current = true;
+            setIsLoading(true);
+            setTimeout(() => {
+              setLimit(prevLimit => Math.min(prevLimit + 4, jobDetails.length));
+              setIsLoading(false);
+              isScrolling.current = false;
+            }, 100);
+          }
+        });
+      },
+      { threshold: 1 }
     );
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => {
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
+      }
+    };
+  }, [jobDetails, limit, isLoading]);
+
+  if (loading && jobDetails.length === 0) {
+    return <Loader />;
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-20 pt-10">
-      {jobDetails?.jdList?.map((data) => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-20 pt-10 overflow-auto">
+      {visibleJobDetails.map((data) => (
         <Card key={data.jdUid} data={data} />
       ))}
+      <div ref={loaderRef} className="loader" /> {/* Loader element at the bottom */}
+      {isLoading && <Loader />} {/* loader while loading more data */}
     </div>
-  )
+  );
 }

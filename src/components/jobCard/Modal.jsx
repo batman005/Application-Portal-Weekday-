@@ -10,15 +10,12 @@ const Modal = ({ onClose, JobDetail }) => {
       id="default-modal"
       aria-hidden="true"
       className="fixed inset-0 z-50 flex justify-center items-center"
-      onClick={onClose} // Handles overlay click to close modal
+      onClick={onClose} 
     >
-      {/* Overlay with transparency */}
       <div className="absolute inset-0 bg-black bg-opacity-30"></div>
-
-      {/* Modal container that stops the propagation to prevent modal close when it's clicked */}
       <div
         className="relative p-4 w-full max-w-2xl bg-white rounded-lg shadow"
-        onClick={stopPropagation} // Prevents closing when clicking inside the modal
+        onClick={stopPropagation} 
       >
         <div className="flex items-center justify-between p-4 rounded-t">
           <h3 className="w-full text-xl font-semibold text-gray-900">

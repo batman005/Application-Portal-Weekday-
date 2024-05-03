@@ -12,14 +12,14 @@ const createRipple = (event) => {
     circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
     circle.style.position = "absolute";
     circle.style.borderRadius = "50%";
-    circle.style.background = "rgba(122, 122, 122, 0.6)"; // Adjusted color to white with slight transparency
+    circle.style.background = "rgba(122, 122, 122, 0.6)"; // Adjusted color
     circle.style.transform = "scale(0)";
     circle.style.animation = "ripple 0.6s linear";
     button.appendChild(circle);
 
     setTimeout(() => {
         circle.remove();
-    }, 900); // Corrected to match the animation duration of 600ms
+    }, 900); // Corrected 
 };
 
 const Button = ({ link, children }) => {

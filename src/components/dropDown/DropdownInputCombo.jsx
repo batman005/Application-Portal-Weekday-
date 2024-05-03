@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { RxCross2 } from "react-icons/rx";
 import { FaAngleDown } from "react-icons/fa";
@@ -14,6 +14,23 @@ function DropdownInputCombo({ placeholder, options, filterKey }) {
     const [inputValue, setInputValue] = useState("");
     const dropdownRef = useRef(null);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        // event listener for component mounting
+        document.addEventListener("click", handleOutsideClick);
+
+        // Clean up 
+        return () => {
+            document.removeEventListener("click", handleOutsideClick);
+        };
+    }, []);
+
+    const handleOutsideClick = (e) => {
+        // Close dropdown if the click is outside the dropdown menu
+        if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+            setDropdownOpen(false);
+        }
+    };
 
     const filteredOptions = options.filter(option =>
         option.toLowerCase().includes(inputValue.toLowerCase())
@@ -48,7 +65,7 @@ function DropdownInputCombo({ placeholder, options, filterKey }) {
 
     const handleOptionClick = (option) => {
         toggleOption(option);
-        setInputValue(""); // Clear input value after selecting an option
+        setInputValue(""); // Clear input 
     };
 
     return (
@@ -56,7 +73,7 @@ function DropdownInputCombo({ placeholder, options, filterKey }) {
             <div className="relative">
                 <div
                     ref={dropdownRef}
-                    className="inline-flex min-w-52 justify-between items-center bg-gray-50 border border-gray-300 rounded-sm p-1.5 whitespace-nowrap overflow-x-auto"
+                    className={`inline-flex min-w-52 justify-between items-center bg-gray-50 border border-gray-300 rounded-sm p-1.5 whitespace-nowrap overflow-x-auto ${dropdownOpen ? 'border-blue-500' : ''}`}
                     style={{ minHeight: "38px" }}
                     onClick={toggleDropdown}
                 >
